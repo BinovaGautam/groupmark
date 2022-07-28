@@ -9,7 +9,7 @@ import {
 import React from 'react';
 import useGroup from '../Hooks/useGropus';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {InputDropDown, NumbersAlert} from '../Component';
+import {InputDropDown, NumberPicker, NumbersAlert} from '../Component';
 
 type Props = {};
 
@@ -94,6 +94,7 @@ const GroupsScreen = (props: Props) => {
       </ScrollView>
       {selectedItem !== -1 && (
         <NumbersAlert
+          // ref={pickerRef}
           marks={selectedGroup !== -1 ? groups?.[selectedGroup]?.[selectedItem] : teacherMarks[selectedItem]}
           onSelect={handleSelectmarks}
           onClose={onClose}

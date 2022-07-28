@@ -29,32 +29,33 @@ const NumbersAlert = ({selected, onClose , marks,onSelect}: Props) => {
     onSelect && onSelect(point);
     }
 
+  let isTeacher = group === -1
   return (
     <View style={styles.overLay}>
       <View style={styles.box}>
         <Text style={styles.headerTxt}>
-          Group {group + 1} -{' '}
-          <Text style={{fontSize: 14}}>SubGroup {item + 1}</Text>{' '}
+          {isTeacher ? 'Teacher ' : `Group ${group + 1} -`}
+          <Text style={{fontSize: 14}}>
+            {isTeacher ? 'Group' : 'SubGroup'} {item + 1}
+          </Text>{' '}
         </Text>
+        <View style={styles.pntsContainer}>
+          {pointsArr.map((pnt, pntId) => {
+            let isSelected = pnt === point;
+            return (
+              <TouchableOpacity
+                key={pntId}
+                onPress={() => handleChange(pnt)}
+                activeOpacity={0.8}
+                style={[styles.pnt, isSelected && styles.selected]}>
+                <Text style={[styles.pntTxt, isSelected && styles.selectedTxt]}>
+                  {pnt}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
       </View>
-      <View style={styles.pntsContainer}>
-        {pointsArr.map((pnt, pntId) => {
-          let isSelected = pnt === point;
-          return (
-            <TouchableOpacity
-              key={pntId}
-              onPress={() => handleChange(pnt)}
-              activeOpacity={0.8}
-              style={[styles.pnt, isSelected && styles.selected]}>
-              <Text style={[styles.pntTxt, isSelected && styles.selectedTxt]}>
-                {pnt}
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
-
-      </View>
-
 
       <TouchableOpacity onPress={onClose} style={styles.closeBtn}>
         <Ionicons name="close-circle-outline" size={40} color="#fff" />
@@ -79,17 +80,18 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   box: {
-    // width: '100%',
-    // height: BOX_DIM,
-    backgroundColor: '#544d4d',
+    width: '100%',
+    height: BOX_DIM,
+    backgroundColor: '#fff',
     borderRadius: 10,
     padding: 15,
+    overlay : 'hidden'
     // marginHorizontal :100,
   },
   headerTxt: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#000',
   },
   closeBtn: {
     position: 'absolute',
@@ -104,24 +106,23 @@ const styles = StyleSheet.create({
   },
     pntsContainer: {
     width: '100%',
-    flexDirection : 'row',
-    flexWrap : 'wrap',
-    justifyContent : 'space-between',
-    padding : 10
+    // alignItems: 'center',
+    // flexDirection : 'row',
+    // flexWrap : 'wrap',
+    // justifyContent : 'space-between',
+    // padding : 10
     },
     pnt: {
-    width : 100,
     justifyContent: 'center',
-    marginVertical : 5,
-    marginHorizontal : 5,
-    backgroundColor : '#fff',
-    borderRadius : 10,
-    padding : 10
+    height : 35,
+    borderBottomWidth: 0.5,
+    borderColor : '#bbb'
     },
     pntTxt: {
-    fontSize : 20,
+    fontSize : 14,
     color : '#000',
-    textAlign : 'center',
+    // textAlign : 'center',
+    marginLeft:20,
     fontWeight : 'bold'
     },
     selected: {
